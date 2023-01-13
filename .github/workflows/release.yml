@@ -8,10 +8,10 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Push to Cocoapod
-        env: 
-          COCOAPODS_TRUNK_TOKEN: ${{ secrets.POD_TRUNK_TOKEN }}
-        run: pod trunk push UserLeapKit.podspec
+      # - name: Push to Cocoapod
+      #   env: 
+      #     COCOAPODS_TRUNK_TOKEN: ${{ secrets.POD_TRUNK_TOKEN }}
+      #   run: pod trunk push UserLeapKit.podspec
       - name: Get Version
         id: get-version
         run: echo "version=$(grep -o "[0-9]\+\.[0-9]\+\.[0-9]\+" UserLeapKit.podspec)" >> $GITHUB_OUTPUT
