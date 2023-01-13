@@ -12,8 +12,8 @@ jobs:
       - name: Push to Cocoapod
         env: 
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.POD_TRUNK_TOKEN }}
-      - run: |
-          pod trunk push UserLeapKit.podspec
+      - run: pod trunk push UserLeapKit.podspec
+
   create-ios-release:
     steps:
       - name: Get Version
