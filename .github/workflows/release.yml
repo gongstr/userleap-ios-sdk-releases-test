@@ -15,7 +15,7 @@ jobs:
       - run: |
           pod trunk push UserLeapKit.podspec
   create-ios-release:
-      -name: Get Version
+      - name: Get Version
         id: get-version
         run: echo "version=$(grep -o "[0-9]\+\.[0-9]\+\.[0-9]\+" UserLeapKit.podspec)" >> $GITHUB_OUTPUT
       - name: Create Tag
