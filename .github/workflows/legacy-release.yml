@@ -9,7 +9,7 @@ jobs:
       - name: Check label name
         id: check_label_name
         run: |
-          if [[ "${{ github.event.label.name }}" =~ ^legacy-release$ ]]; then
+          if [[ "${{ github.event.label.name }}" =~ ^legacy$ ]]; then
             echo "Execute legacy labeled release"
           else
             echo "Abort legacy labeled release"
