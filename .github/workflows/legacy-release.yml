@@ -1,7 +1,7 @@
 name: Legacy Label Release
 on:
   label:
-    types: [created]
+    types: [created, edited]
 jobs:
   label-created:
     runs-on: ubuntu-latest
