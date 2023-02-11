@@ -6,6 +6,9 @@ jobs:
   label-added:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Check label name
         id: check_label_name
         run: |
@@ -15,7 +18,7 @@ jobs:
             echo "Abort legacy labeled release"
             exit 1
           fi
-          
+
       - name: Get Version
         id: get-version
         run: echo "version=$(grep -o "[0-9]\+\.[0-9]\+\.[0-9]\+" UserLeapKit.podspec)-legacy" >> $GITHUB_OUTPUT
