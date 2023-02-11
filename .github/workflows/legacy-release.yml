@@ -39,15 +39,8 @@ jobs:
 
       - name: Close pull request
         if: steps.get_branch.data[0].name != null
-        uses: peter-evans/close-pull-request@v2
+        uses: peter-evans/close-pull@v2
         with:
-          number: ${{ github.event.pull_request.number }}
-          merge_method: rebase
-          
-      - name: Delete branch
-        if: steps.get_branch.data[0].name != null
-        run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git checkout main
-          git branch -D ${{ steps.get_branch.data[0].name }}
+          pull-request-number: ${{ github.event.pull_request.number }}
+          comment: Auto-closing pull request
+          delete-branch: true
