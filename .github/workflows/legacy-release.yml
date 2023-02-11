@@ -1,7 +1,7 @@
 name: Legacy Label Release
 on:
-  label:
-    types: [created, edited]
+  pull-request:
+    types: [labeled]
 jobs:
   label-created:
     runs-on: ubuntu-latest
@@ -20,9 +20,8 @@ jobs:
         id: get_branch
         uses: octokit/request-action@v2.x
         with:
-          route: GET /repos/${{ github.repository }}/branches
-          branches: true
-
+          route: GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/head
+          
       - name: Display branch reference
         run: |
           echo "The branch reference associated with the label is: ${{ steps.get_branch.data[0].name }}"
