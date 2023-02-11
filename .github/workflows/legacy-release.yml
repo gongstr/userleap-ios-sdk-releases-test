@@ -1,0 +1,53 @@
+name: Legacy Label Release
+on:
+  label:
+    types: [created]
+jobs:
+  label-created:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check label name
+        id: check_label_name
+        run: |
+          if [[ "${{ github.event.label.name }}" =~ ^legacy-release$ ]]; then
+            echo "Execute legacy labeled release"
+          else
+            echo "Abort legacy labeled release"
+            exit 1
+          fi
+          
+      - name: Get branch reference
+        id: get_branch
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /repos/${{ github.repository }}/branches
+          branches: true
+
+      - name: Display branch reference
+        run: |
+          echo "The branch reference associated with the label is: ${{ steps.get_branch.data[0].name }}"
+
+      - name: Get Version
+        id: get-version
+        run: echo "version=$(grep -o "[0-9]\+\.[0-9]\+\.[0-9]\+" UserLeapKit.podspec)-legacy" >> $GITHUB_OUTPUT
+
+      - name: Create Tag
+        run: bash ./scripts/tag-and-release.sh tag ${{ secrets.GH_TOKEN }} ${{ steps.get-version.outputs.version }}
+
+      - name: Create release
+        run: bash ./scripts/tag-and-release.sh release ${{ secrets.GH_TOKEN }} ${{ steps.get-version.outputs.version }}
+
+      - name: Close pull request
+        if: steps.get_branch.data[0].name != null
+        uses: peter-evans/close-pull-request@v2
+        with:
+          number: ${{ github.event.pull_request.number }}
+          merge_method: rebase
+          
+      - name: Delete branch
+        if: steps.get_branch.data[0].name != null
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git checkout main
+          git branch -D ${{ steps.get_branch.data[0].name }}
