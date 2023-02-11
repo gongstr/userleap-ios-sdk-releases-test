@@ -16,18 +16,6 @@ jobs:
             exit 1
           fi
           
-      - name: Get branch reference
-        id: get_branch
-        uses: octokit/request-action@v2.x
-        with:
-          route: GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/head
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          
-      - name: Display branch reference
-        run: |
-          echo "The branch reference associated with the label is: ${{ steps.get_branch.data[0].name }}"
-
       - name: Get Version
         id: get-version
         run: echo "version=$(grep -o "[0-9]\+\.[0-9]\+\.[0-9]\+" UserLeapKit.podspec)-legacy" >> $GITHUB_OUTPUT
