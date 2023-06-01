@@ -36,12 +36,12 @@ EOF
 }
 
 release() {
-    # curl \
-    #     -X POST \
-    #     -H "Accept: application/vnd.github.v3+json" \
-    #     -H "Authorization: token $GH_TOKEN" \
-    #     -d "$(generate_release_payload)" \
-    #     https://api.github.com/repos/gongstr/userleap-ios-sdk-releases-test/releases
+    curl \
+        -X POST \
+        -H "Accept: application/vnd.github.v3+json" \
+        -H "Authorization: token $GH_TOKEN" \
+        -d "$(generate_release_payload)" \
+        https://api.github.com/repos/gongstr/userleap-ios-sdk-releases-test/releases
 }
 
 main() {
