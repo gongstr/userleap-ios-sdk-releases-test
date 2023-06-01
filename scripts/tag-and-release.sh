@@ -29,7 +29,7 @@ generate_release_payload() {
     "name":"$TAG_NAME",
     "draft":false,
     "prerelease":false,
-    "generate_release_notes":true
+    "generate_release_notes":true,
     "make_latest":"$MAKE_LATEST"
 }
 EOF
